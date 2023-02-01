@@ -1,0 +1,65 @@
+﻿<Window x:Class="NevGenerator.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:NevGenerator"
+        mc:Ignorable="d"
+        Title="Névgenerátor" Height="500" Width="500" ResizeMode="CanMinimize">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <DockPanel Grid.Row="1" Grid.Column="0" Margin="5">
+            <Button Content="Betöltés" Click="loadCsaladNevek"/>
+            <Label Content="Családnevek"/>
+            <Label Content="{Binding ElementName=lbCsaladNevek, Path=Items.Count}"/>
+        </DockPanel>
+        <DockPanel Grid.Row="1" Grid.Column="1" Margin="5">
+            <Button Content="Betöltés" Click="loadUtoNevek"/>
+            <Label Content="Utónevek"/>
+            <Label Content="{Binding ElementName=lbUtoNevek, Path=Items.Count}"/>
+        </DockPanel>
+        <ListBox x:Name="lbUtoNevek" Margin="5" Grid.Row="2" Grid.Column="1" Background="#FFF9F1B7"/>
+        <ListBox x:Name="lbCsaladNevek" Margin="5" Grid.Row="2" Grid.Column="0" Background="#FFF9F1B7"/>
+        <ListBox x:Name="lbGeneraltNevek" Margin="5" Grid.Row="3" Grid.Column="0" Background="#FFA3DCDB" MouseDoubleClick="lbGeneraltNevek_MouseDoubleClick"/>
+        <StackPanel Grid.Row="3" Grid.Column="1" Margin="5">
+            <Border Background="#FFFDB6B6" CornerRadius="10" Padding="5">
+                <StackPanel>
+                    <DockPanel>
+                        <Label Content="Utónevek száma:"/>
+                        <RadioButton x:Name="EgyUtoNev" Content="Egy" IsChecked="True"/>
+                        <RadioButton Content="Kettő"/>
+                    </DockPanel>
+                    <DockPanel>
+                        <Label Content="Létrehozandó nevek száma: "/>
+                        <TextBox x:Name="tbLetrehozandoSzam" Text="{Binding ElementName=sliderLetrehozandoSzam, Path=Value}"/>
+                    </DockPanel>
+                    <DockPanel VerticalAlignment="Center">
+                        <Label Content="0"/>
+                        <Slider VerticalAlignment="Center" Minimum="0" Maximum="{Binding ElementName=lbCsaladNevek, Path=Items.Count}" Width="170" x:Name="sliderLetrehozandoSzam" Value="{Binding ElementName=tbLetrehozandoSzam, Path=Text}" SmallChange="1" IsSnapToTickEnabled="True"/>
+                        <Label Content="{Binding ElementName=lbCsaladNevek, Path=Items.Count}"/>
+                    </DockPanel>
+                </StackPanel>
+            </Border>
+            <Button Content="Neveket generál" Margin="2" Click="neveketGeneral"/>
+            <Button Content="Generált nevek törlése" Margin="2" Click="generaltTorlese"/>
+            <Button Content="Nevek rendezése" Margin="2" Click="nevekRendezese"/>
+            <Button Content="Nevek mentése" Margin="2" Click="nevekMentese"/>
+        </StackPanel>
+        <StatusBar Grid.Row="4" Grid.ColumnSpan="2">
+            <StatusBarItem Content="Generált nevek száma:"/>
+            <TextBlock Text="{Binding ElementName=lbGeneraltNevek, Path=Items.Count}"/>
+            <Separator Margin="10 0"/>
+            <StatusBarItem x:Name="stbRendezes"></StatusBarItem>
+        </StatusBar>
+    </Grid>
+</Window>
